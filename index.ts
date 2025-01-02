@@ -9,10 +9,7 @@
 // Enums
 
 
-// 1:33:10
-// Going back to OOP
+// 2:13:51
+// Generics (the best topic in typescript)
 
-// Classes
-
-
-
+// 

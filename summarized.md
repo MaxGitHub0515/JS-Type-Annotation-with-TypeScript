@@ -184,3 +184,240 @@ const items: (number | string)[] = [1,2,432, "hey"];
 
 
 
+
+
+
+
+
+
+
+// 1:33:10
+// Going back to OOP
+
+// Classes
+
+class Person {
+    tellName:string;
+    tellAge:number;
+
+    constructor(name:string, age:number){
+        this.tellName = name;
+        this.tellAge = age;
+    }
+}
+
+const person = new Person("John", 54)
+console.log(person)
+
+// Access Modifiers
+// There are 3 types : public, private, protected
+// Public:  members can be accessed from anywhere, both inside and outside the class
+// Private: members can only be accessed inside the class, but not outside
+// Protected: members can be accessed inside the class as well as any subclasses that extend the class
+
+class Indentity {
+    private first:string;
+    public last:string;
+    protected age: number;
+
+    constructor(first:string, last:string, age:number) {
+        this.first = first;
+        this.last = last;
+        this.age = age;
+    }
+    getName(): string {
+        return `${this.first} ${this.last}, Age: ${this.age} `;
+    }
+}
+let spitBack = new Indentity("John", "Doe", 25);
+
+console.log(spitBack.getName())
+
+class User extends Indentity {
+    constructor(first:string, last:string, age:number) {
+        super(first, last, age)
+    }
+}
+
+const dev = new User("Max", "WebDev", 32);
+console.log(dev);
+
+
+
+// 1:46:22
+// Getters and Setters
+
+class Run {
+    private property: number = 0;
+
+    get myProperty(): number {
+        return this.property;
+    }
+    set myProperty(value: number) {
+        this.property = value;
+    }
+}
+
+const myInstance = new Run();
+console.log(`Current value ${myInstance.myProperty}`);
+myInstance.myProperty = 10;
+console.log(`Current value ${myInstance.myProperty}`);
+
+
+
+// 1:49:50
+// Interfaces
+// Usage: 
+// Commonly used to define structure of objects, and also can used to
+// describe the shape of functions and classes
+// Interface definition
+interface JobCollection {
+    position: string;
+    payCheck: string;
+    expereinceRequired: number;
+}
+
+// Usage
+
+const exampleJob: JobCollection = {
+    position: "Senior Software Developer",
+    payCheck:"10k",
+    expereinceRequired: 5,
+}
+
+// Interface for a function
+
+interface MathOperation {
+    (x:number, y:number): number;
+}
+// Usage
+const add: MathOperation = (a, b) => a + b;
+const subtract: MathOperation = (a, b) => a - b;
+
+console.log(add(5,3));
+console.log(subtract(7,2))
+
+// specifying methods inside interface
+
+interface Book {
+    author: string;
+    edition: string;
+    yearOfProduction: number;
+    sayAcknowledgement() : void;
+}
+
+function acknowledge(book:Book){
+    console.log(`Book written by ${book.author}, Edition: ${book.edition}, Year: ${book.yearOfProduction}  `)
+    book.sayAcknowledgement()
+}
+
+const book: Book = {
+    author: "Paul Allen",
+    edition: "IV",
+    yearOfProduction: 2019,
+    sayAcknowledgement(){
+        console.log('Huge thanks to the contributors')
+    }
+}
+
+acknowledge(book);
+
+// example
+
+interface Song {
+    songName: string;
+    singerName: string;
+    printSongInfo(songName: string, singerName: string): string
+}
+
+const song1: Song = {
+    songName: "Wild",
+    singerName: "Imagine",
+    printSongInfo: (songName, singerName ) => {
+        return  `Song: ${songName}, Singer: ${singerName}
+
+        `
+    }
+}
+
+console.log(song1.printSongInfo('Wild', "Imagine"))
+
+
+
+// extedning intefaces
+
+interface MovieDetails {
+    readonly name:string;
+    ratings: number;
+    printMovie(name:string, price:number, ratings:number): number | string;
+
+}
+
+interface MovieGenra extends MovieDetails {
+    genra: string;
+}
+
+const movie1: MovieGenra = {
+    name: "Star Wars",
+    genra: "Action",
+    ratings: 8.5,
+    printMovie: (name:string, price:number, ratings:number): string | number => {
+        return `Movie name: ${name}, Price: ${price}, Ratings: ${ratings}`
+    }
+}
+const res = movie1.printMovie("Jacky Chan", 100, 8 )
+console.log(res)
+
+// 2:08:50
+// Interfaces with classes
+// Extending using implements keyword
+
+interface Vehicle {
+    start(): void;
+    stop(): void;
+}
+
+class Car implements Vehicle {
+    start(): void {
+        console.log('Car is starting...')
+    }
+    stop(): void {
+        console.log('Car is stopped...')
+    }
+}
+
+const myCar = new Car();
+myCar.start()
+myCar.stop()
+
+// 2:10:00
+// Declaration merging (re-openning) or interface extension
+// Once interface is declared, it can not be direcly modified
+// Purpose: this can be useful when u want to add new 
+// props or methods to an existing interface without modifying the original declaration;
+
+// Origininal 
+interface Auto {
+    brand: string;
+    start(): void;
+}
+
+interface Auto {
+    model:string;
+    stop(): void;
+}
+
+const myAuto: Auto = {
+    brand: "Mercedes",
+    model: "CLC",
+    start() {
+        console.log("start")
+    },
+    stop() {
+        console.log("stop")
+    }
+}
+
+myAuto.start()
+
+myAuto.stop()
